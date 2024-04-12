@@ -1,0 +1,12 @@
+# Dependency directories
+node_modules/
+
+# Environment configuration
+.env
+
+# IDE-specific
+.idea/
+
+# Production / Build
+/dist
+/build
