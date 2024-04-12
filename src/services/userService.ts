@@ -1,7 +1,8 @@
 import {User} from "../types/user";
 import {query, transactionQuery} from "../storage/db";
+import {IUserService} from "../interfaces/UserService";
 
-export class UserService {
+export class UserService implements IUserService {
     async getUsersPaginated(offset: number, limit: number): Promise<User[]> {
         return await query<User>('SELECT * FROM users OFFSET $1 LIMIT $2', [offset, limit]);
     }
@@ -15,7 +16,7 @@ export class UserService {
         return result.length ? result[0] : null;
     }
 
-    async updateStatuses(updates: { id: number, status: string }[]): Promise<any> {
+    async updateStatuses(updates: { id: number, status: string }[]): Promise<User[]> {
         /**
          * Due to time constraints, we're using promise.all...
          * To handle scale more effectively, consider using batch processing:
@@ -24,9 +25,10 @@ export class UserService {
          * additionally, consider using a transaction to ensure all updates are successful or none are
          * (https://node-postgres.com/features/transactions)
          **/
-        const queryText = 'UPDATE users SET status = $1 WHERE id = $2';
+        const queryText = 'UPDATE users SET status = $1 WHERE id = $2 returning *';
         const promises = updates.map(update => query(queryText, [update.status, update.id]));
-        return await Promise.all(promises);
+        const result = await Promise.all(promises);
+        return result.map(res => res[0] as User);
     }
 
     async setGroupToNull(userId: number): Promise<User | null> {
