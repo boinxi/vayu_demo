@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express";
-import {hasIdParam, hasStringParam, updateStatusesSchema, validateRequestBody} from "../../validators/validators";
+import {hasIdParam, hasStringParam, updateStatusesSchema, validateRequestBody} from "../../middlewares/validators";
 import {UsersRepo} from "../../globalRepos";
 import {logger} from "../../logger";
 
