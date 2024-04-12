@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, {Express, Request, Response} from "express";
 import dotenv from "dotenv";
 import v1Router from "./routes";
 import {loggerMiddleware} from "./validators/logger";
