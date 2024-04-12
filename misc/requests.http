@@ -1,9 +1,13 @@
-### byName
-GET http://localhost:3000/v1/users/byName/a
+### Get All Users with Pagination
+GET http://localhost:3000/v1/users?offset=3&limit=3
 
+### Filter Users by Name
+GET http://localhost:3000/v1/users/byName/Amit
 
+### Filter Users by Email Address
+GET http://localhost:3000/v1/users/byEmail/Amit@example.com
 
-### updateStatuses
+### Update Users Statuses
 PATCH http://localhost:3000/v1/users/updateStatuses
 Content-Type: application/json
 
@@ -28,5 +32,5 @@ Content-Type: application/json
     ]
 }
 
-### updateStatuses
+### Remove user from group
 PATCH http://localhost:3000/v1/users/10/removeGroupInfo
