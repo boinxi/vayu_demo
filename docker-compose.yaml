@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  app:
+    container_name: express_app
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://user:Aa123456@db:5432/demo
+  db:
+    image: postgres:13
+    container_name: postgres_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=Aa123456
+      - POSTGRES_DB=demo
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d/:ro
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
